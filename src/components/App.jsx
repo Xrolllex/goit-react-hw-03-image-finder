@@ -1,26 +1,53 @@
 import { Component } from "react";
-import SearchBar from "./Searchbar";
-import ImageGallery from "./ImageGallery";
+import SearchBar from "./Searchbar/Searchbar";
+import ImageGallery from "./ImageGallery/ImageGallery";
+import Modal from "./Modal/Modal"
+
 
 class App extends Component {
-  constructor(props) {
-    super (props);
-    this.handleSearch = this.handleSearch.bind(this);
+  state = {
+    images: [],
+    currentPage: 1,
+    searchQuery: '',
+    isLoading: false,
+    error: null,
+    showModal: false,
+    largeImageURL: '',
+  };
 
+
+  getInputValue = (handleValue) => {
+    this.setState ({getInputValue: handleValue, page:1})
   }
 
-  handleSearch(query) {
-    
-  }
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({ showModal: !showModal }))
+}
+
+getLargeImg = url => {
+    this.toggleModal();
+    this.setState({ modalImg: url });
+}
+
+loadMoreBtn = () => {
+    this.setState(prevState => ({
+        page: prevState.page + 1,
+        }));
+    }
+
+
 
   render() {
-    return (
-      <div>
-        <SearchBar handleSearch={this.handleSearch}/>
-        <ImageGallery/>
-     </div>
-    )
-  }
+        const { modalImg, showModal ,page} = this.state;
+
+        return (
+            <>
+                <SearchBar getInputValue={this.getInputValue}/>
+                <ImageGallery inputValue={this.state.inputValue} onClick={this.getLargeImg} loadMoreBtn={this.loadMoreBtn} page={ page}/>
+                {showModal && <Modal url={modalImg} onClose={this.toggleModal} />}
+            </>
+        )
+    }
 }
 
 
