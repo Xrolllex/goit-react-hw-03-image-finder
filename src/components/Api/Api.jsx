@@ -5,7 +5,7 @@ export default async function getImages(inputValue, page = 1) {
     try {
         const response = await fetch(`${url}?q=${inputValue}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`);
         const data = await response.json();
-        console.log(data); // Dodaj tę linię
+        console.log(data);
 
         return data;
     } catch (error) {

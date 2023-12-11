@@ -1,10 +1,12 @@
 import { Component } from "react";
 import PropTypes from "prop-types";
+import css from "./imageGallery.module.css"
+import getImages from "../Api/Api";
 import ImageGalleryItem from "../ImageGalleryItem/ImageGalleryItem";
 import Button from "../Button/Button";
 import Loader from "../Loader/Loader";
-import getImages from "../Api/Api";
-import css from "./imageGallery.module.css"
+
+
 
 class ImageGallery extends Component {
    state = {
@@ -29,11 +31,13 @@ class ImageGallery extends Component {
 
     this.setState({ loading: true });
 
-    getImages(inputValue, page)
-        .then(response => {
-            this.setState({ images: response.hits, status: "resolved", loading: false });
-        })
-        .catch(error => this.setState({ status: "rejected", loading: false }));
+    setTimeout(() => {
+        getImages(inputValue, page)
+            .then(response => {
+                this.setState({ images: response.hits, status: "resolved", loading: false });
+            })
+            .catch(error => this.setState({ status: "rejected", loading: false }));
+    }, 2000);
 };
 
 
@@ -58,7 +62,7 @@ render() {
     if (status === "resolved") {
         return (
             <>
-                    <ul className={css.ImageGallery}>
+                    <ul className={css.imageGallery}>
                         {images.map(({ id, largeImageURL, tags }) => (
                             <ImageGalleryItem
                                 key={id}
@@ -69,7 +73,8 @@ render() {
                         ))}
                     </ul>
                     {this.state.images.length !== 0 ? (
-                        <Button onClick={this.props.loadMoreBtn} />
+                        <div style={{textAlign: 'center'}}><Button onClick={this.props.loadMoreBtn} />
+                        </div>
                     ) : (
                         <p>No more images</p>
                     )}

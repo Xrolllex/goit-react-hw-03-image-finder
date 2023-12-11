@@ -7,14 +7,14 @@ class SearchBar extends Component {
         input: ""
     }
 
-    search = e => {
-        e.preventDefault ()
+    search = event => {
+        event.preventDefault ()
         this.props.getInputValue(this.state.input)
         this.setState({input:''})
     }
 
-    handleChange= e => {
-        this.setState({input:e.target.value})
+    handleChange= event => {
+        this.setState({input:event.target.value})
     }
 
     render() {

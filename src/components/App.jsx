@@ -4,6 +4,7 @@ import ImageGallery from "./ImageGallery/ImageGallery";
 import Modal from "./Modal/Modal"
 
 
+
 class App extends Component {
   state = {
     images: [],
@@ -17,8 +18,9 @@ class App extends Component {
 
 
   getInputValue = (handleValue) => {
-    this.setState ({getInputValue: handleValue, page:1})
-  }
+    this.setState ({ inputValue: handleValue, page: 1 })
+}
+
 
   toggleModal = () => {
     this.setState(({ showModal }) => ({ showModal: !showModal }))
@@ -44,7 +46,7 @@ loadMoreBtn = () => {
             <>
                 <SearchBar getInputValue={this.getInputValue}/>
                 <ImageGallery inputValue={this.state.inputValue} onClick={this.getLargeImg} loadMoreBtn={this.loadMoreBtn} page={ page}/>
-                {showModal && <Modal url={modalImg} onClose={this.toggleModal} />}
+                {showModal && <Modal url={modalImg} onClose={this.toggleModal} />} 
             </>
         )
     }
